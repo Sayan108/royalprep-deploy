@@ -22,6 +22,12 @@ PostgreSQL is the backend's only application database for questions, reports, ho
 
 For a remote PostgreSQL server with a private CA, obtain the CA certificate through your provider's trusted console and add `sslmode=verify-full` and `sslrootcert` (the URL-encoded local certificate path) to `DATABASE_URL`. This verifies both the certificate chain and server hostname for the backend and migration script. Do not disable certificate verification.
 
+### Render backend
+
+Set the service root directory to `backend`, the build command to `npm ci --include=dev && npm run build`, and the start command to `npm start`. The build installs the lockfile's compiler and produces `dist/server.js`; startup runs the compiled code. Render supplies `PORT`; set `HOST=0.0.0.0`, `NODE_ENV=production`, `DUMMY_OTP_ENABLED=false`, `ADMIN_PASSWORD`, `ADMIN_EMAIL`, `SESSION_SECRET` and `DATABASE_URL` in the service's environment settings. Both sign-in flows are unavailable until real email OTP delivery and verification are implemented.
+
+Add the provider's CA certificate as a Render secret file named `ca.pem`, and set the connection URL's query string to `sslmode=verify-full&sslrootcert=%2Fetc%2Fsecrets%2Fca.pem`. Supply the database username, password, host, port and database name separately in the URL, with credentials URL-encoded where necessary. Never use a Windows certificate path on Render or commit credentials. Apply the PostgreSQL migrations before starting the service; the backend checks the required tables at startup.
+
 ## Practice and administration
 
 Students can browse chapters with published questions at `/study/library`, answer questions at `/practice`, view explanations, and report errors. These study screens require student sign-in, and practice API requests require the student session. Chapter notes are not yet available. Student demo sign-in or sign-up is at `/sign-in`; it creates an email-only account and a temporary session, but does not save practice progress. Sign in at `/admin` with the configured password and a demo email code to create, edit, publish, filter and import individual questions and review reports. Edits use version checks; a report retains the question text and version at the time it was submitted.
