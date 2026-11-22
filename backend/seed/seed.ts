@@ -16,8 +16,11 @@ async function request(path: string, init?: RequestInit): Promise<unknown> {
 }
 
 for (const question of seedQuestions) questionInputSchema.parse(question)
-const login = z.object({ token: z.string() }).parse(await request('/admin/login', {
+const challenge = z.object({ challenge: z.string() }).parse(await request('/admin/otp/request', {
   method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password }),
+}))
+const login = z.object({ token: z.string() }).parse(await request('/admin/login', {
+  method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ challenge: challenge.challenge, code: '123456' }),
 }))
 const headers = { 'Content-Type': 'application/json', Authorization: `Bearer ${login.token}` }
 const existing = z.array(z.object({ chapter: z.string(), stem: z.string() })).parse(await request('/admin/questions', { headers }))
@@ -28,4 +31,5 @@ for (const question of seedQuestions) {
   existing.push(question)
   created++
 }
+await request('/admin/logout', { method: 'POST', headers })
 console.log(`Created ${created} sample questions; existing matching questions were retained.`)

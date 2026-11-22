@@ -1,14 +1,12 @@
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import { AdminLogin } from './pages/AdminLogin'
-import { Practice } from './pages/Practice'
-import { QuestionBank } from './pages/QuestionBank'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { adminRoutes } from './AdminRoutes'
+import { studentRoutes } from './StudentRoutes'
 import './style.css'
 import './screens.css'
 
 createRoot(document.getElementById('root')!).render(<BrowserRouter><Routes>
-  <Route path="/practice" element={<Practice/>}/>
-  <Route path="/admin" element={<AdminLogin/>}/>
-  <Route path="/admin/questions" element={<QuestionBank/>}/>
-  <Route path="*" element={<Navigate to="/practice" replace/>}/>
+  {studentRoutes}
+  {adminRoutes}
+  <Route path="*" element={<main><h1>Page not found</h1><a href="/">Go home</a></main>}/>
 </Routes></BrowserRouter>)

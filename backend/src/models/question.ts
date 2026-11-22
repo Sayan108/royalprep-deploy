@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import { z } from 'zod'
 
 export const questionContentSchema = z.object({
@@ -15,6 +14,3 @@ export const questionInputSchema = questionContentSchema.extend({
 export type QuestionInput = z.infer<typeof questionInputSchema>
 export type Question = QuestionInput & { id: string; version: number }
 export type QuestionReport = { id: string; questionId: string; questionVersion: number; questionStem: string; message: string; createdAt: number }
-
-export const QuestionModel = mongoose.model('Question', new mongoose.Schema({ _id: String, payload: mongoose.Schema.Types.Mixed }, { versionKey: false }))
-export const ReportModel = mongoose.model('PracticeReport', new mongoose.Schema({ _id: String, payload: mongoose.Schema.Types.Mixed }, { versionKey: false }))

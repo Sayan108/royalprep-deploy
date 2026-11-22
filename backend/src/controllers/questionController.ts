@@ -8,9 +8,21 @@ const answerInput = z.object({ version: z.number().int().positive(), option: z.n
 const reportInput = z.object({ version: z.number().int().positive(), message: z.string().trim().min(1).max(500) })
 
 export function createQuestionController(service: ReturnType<typeof createQuestionService>) {
-  const listPractice: RequestHandler = async (_req, res) => {
+  const listChapters: RequestHandler = async (_req, res) => {
     const questions = await service.listQuestions(true)
-    res.set('Cache-Control', 'no-store').json(questions.map(q => ({
+    const counts = new Map<string, number>()
+    for (const question of questions) counts.set(question.chapter, (counts.get(question.chapter) ?? 0) + 1)
+    res.json([...counts].map(([name, questionCount]) => ({ name, questionCount })).sort((a, b) => a.name.localeCompare(b.name)))
+  }
+  const catalogSummary: RequestHandler = async (_req, res) => {
+    const questions = await service.listQuestions(true)
+    res.json({ questionCount: questions.length, chapterCount: new Set(questions.map(q => q.chapter)).size })
+  }
+  const listPractice: RequestHandler = async (req, res) => {
+    const chapter = z.string().trim().min(1).max(120).optional().safeParse(req.query.chapter)
+    if (!chapter.success) { res.status(422).json({ error: 'Provide a valid chapter filter.' }); return }
+    const questions = await service.listQuestions(true)
+    res.set('Cache-Control', 'no-store').json(questions.filter(q => !chapter.data || q.chapter === chapter.data).map(q => ({
       id: q.id, version: q.version, chapter: q.chapter, stem: q.stem, options: q.options,
     })))
   }
@@ -58,5 +70,5 @@ export function createQuestionController(service: ReturnType<typeof createQuesti
     await service.createReport({ id: id(), questionId: question.id, questionVersion: question.version, questionStem: question.stem, message: parsed.data.message, createdAt: Date.now() })
     res.status(201).json({ ok: true })
   }
-  return { listPractice, listQuestions, listReports, create, update, importCsv, answer, report }
+  return { catalogSummary, listChapters, listPractice, listQuestions, listReports, create, update, importCsv, answer, report }
 }

@@ -1,10 +1,14 @@
 import { useCallback, useEffect, useState } from 'react'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { ScreenLayout } from '../components/ScreenLayout'
 import { ErrorMessage } from '../components/ErrorMessage'
 import type { PracticeFeedback, PracticeQuestion } from '../models/question'
 import { api } from '../services/api'
 
 export function Practice() {
+  const [searchParams] = useSearchParams()
+  const navigate = useNavigate()
+  const chapter = searchParams.get('chapter')
   const [questions, setQuestions] = useState<PracticeQuestion[]>([])
   const [index, setIndex] = useState(0)
   const [selected, setSelected] = useState<number>()
@@ -14,20 +18,31 @@ export function Practice() {
   const [report, setReport] = useState('')
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
+  const [authError, setAuthError] = useState('')
   const [loading, setLoading] = useState(true)
   const [busy, setBusy] = useState(false)
+  const [studentEmail, setStudentEmail] = useState<string | null>(null)
   const load = useCallback(async () => {
     setLoading(true); setError('')
-    try { setQuestions(await api<PracticeQuestion[]>('/practice/questions')); setIndex(0); setSelected(undefined); setFeedback(undefined) }
-    catch (e) { setError((e as Error).message) }
+    try { setQuestions(await api<PracticeQuestion[]>('/practice/questions' + (chapter ? '?chapter=' + encodeURIComponent(chapter) : ''), {}, false, true)); setIndex(0); setSelected(undefined); setFeedback(undefined) }
+    catch (e) { setQuestions([]); setError((e as Error).message) }
     finally { setLoading(false) }
-  }, [])
+  }, [chapter])
   useEffect(() => { void load() }, [load])
+  useEffect(() => {
+    if (!sessionStorage.getItem('rp-student')) return
+    api<{ user: { email: string } }>('/auth/session', {}, false, true)
+      .then(result => { setStudentEmail(result.user.email); setAuthError('') })
+      .catch(e => {
+        if (sessionStorage.getItem('rp-student')) setAuthError((e as Error).message)
+        else setStudentEmail(null)
+      })
+  }, [])
   const question = questions[index]
   async function submit() {
     if (!question || selected === undefined) return
     setBusy(true); setError('')
-    try { setFeedback(await api<PracticeFeedback>(`/practice/questions/${encodeURIComponent(question.id)}/answer`, { method: 'POST', body: JSON.stringify({ version: question.version, option: selected }) })) }
+    try { setFeedback(await api<PracticeFeedback>(`/practice/questions/${encodeURIComponent(question.id)}/answer`, { method: 'POST', body: JSON.stringify({ version: question.version, option: selected }) }, false, true)) }
     catch (e) { setError((e as Error).message) }
     finally { setBusy(false) }
   }
@@ -36,7 +51,7 @@ export function Practice() {
     if (!question) return
     setBusy(true); setError(''); setMessage('')
     try {
-      await api(`/practice/questions/${encodeURIComponent(question.id)}/reports`, { method: 'POST', body: JSON.stringify({ version: question.version, message: report }) })
+      await api(`/practice/questions/${encodeURIComponent(question.id)}/reports`, { method: 'POST', body: JSON.stringify({ version: question.version, message: report }) }, false, true)
       setReport(''); setReporting(false); setMessage('Report sent. Thank you.')
     } catch (e) { setError((e as Error).message) }
     finally { setBusy(false) }
@@ -45,8 +60,22 @@ export function Practice() {
     setIndex(value => (value + 1) % questions.length); setSelected(undefined); setFeedback(undefined)
     setExplain(false); setReporting(false); setReport(''); setMessage(''); setError('')
   }
+  async function signOut() {
+    setBusy(true); setAuthError('')
+    try {
+      await api('/auth/logout', { method: 'POST' }, false, true)
+      sessionStorage.removeItem('rp-student')
+      sessionStorage.removeItem('rp-student-email')
+      setQuestions([])
+      navigate('/sign-in', { replace: true })
+    } catch (e) { setAuthError((e as Error).message) }
+    finally { setBusy(false) }
+  }
   return <ScreenLayout>
     <div className="practice-heading"><div><p className="screen-kicker">QUESTION PRACTICE</p><h1>Practice</h1></div>{question && <span className="counter">QUESTION {index + 1} OF {questions.length}</span>}</div>
+    {chapter && <p>Chapter: {chapter} · <Link to="/study/library">All chapters</Link></p>}
+    <div className="practice-account">{studentEmail ? <><span>Signed in as {studentEmail}</span><button className="outline-button" disabled={busy} onClick={signOut}>Sign out</button></> : <Link to="/sign-in">Student sign-in</Link>}</div>
+    <ErrorMessage text={authError}/>
     <div className="progress-track"><div style={{ width: questions.length ? `${(index + 1) / questions.length * 100}%` : '0%' }} /></div>
     <ErrorMessage text={error}/>{error && <button className="outline-button" onClick={load} disabled={loading || busy}>Reload questions</button>}{message && <p role="status" className="screen-message">{message}</p>}
     {loading ? <p>Loading questions...</p> : !question ? <div className="screen-card"><p>No published questions are available yet.</p><button className="screen-button" onClick={load}>Try again</button></div> : <>

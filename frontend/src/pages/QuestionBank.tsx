@@ -64,10 +64,19 @@ export function QuestionBank() {
     } catch (e) { setError((e as Error).message); setSignedIn(Boolean(sessionStorage.getItem('rp-admin'))) }
     finally { setBusy(false) }
   }
+  async function signOut() {
+    setBusy(true); setError('')
+    try {
+      await api('/admin/logout', { method: 'POST' }, true)
+      sessionStorage.removeItem('rp-admin')
+      setSignedIn(false); setSelection(undefined); setQuestions([]); setReports([])
+    } catch (e) { setError((e as Error).message) }
+    finally { setBusy(false) }
+  }
   const selectedReports = selection ? reports.filter(r => r.questionId === selection.id) : []
   return <ScreenLayout admin>
     {!signedIn ? <section className="screen-card"><h1>Question bank</h1><p>Sign in to manage questions.</p><Link className="screen-button" to="/admin">Admin sign-in</Link></section> : <>
-      <div className="bank-heading"><div><p className="screen-kicker">ADMIN</p><h1>Question bank</h1><p>Every MCQ, its status, source and student reports.</p></div><div className="bank-actions"><button className="screen-button" onClick={() => { setSelection(emptyQuestion()); setError(''); setMessage('') }}>Add question</button><a className="outline-button" href={'data:text/csv;charset=utf-8,' + encodeURIComponent(csvHeader + '\n')} download="questions-template.csv">Download CSV template</a><button className="outline-button" onClick={() => { sessionStorage.removeItem('rp-admin'); setSignedIn(false); setSelection(undefined); setQuestions([]); setReports([]) }}>Sign out</button></div></div>
+      <div className="bank-heading"><div><p className="screen-kicker">ADMIN</p><h1>Question bank</h1><p>Every MCQ, its status, source and student reports.</p></div><div className="bank-actions"><button className="screen-button" onClick={() => { setSelection(emptyQuestion()); setError(''); setMessage('') }}>Add question</button><a className="outline-button" href={'data:text/csv;charset=utf-8,' + encodeURIComponent(csvHeader + '\n')} download="questions-template.csv">Download CSV template</a><button className="outline-button" disabled={busy} onClick={signOut}>Sign out</button></div></div>
       <form className="import-bar" onSubmit={importCsv}><label>Import questions CSV<input type="file" accept=".csv,text/csv" onChange={e => setFile(e.target.files?.[0])} /></label><button className="screen-button" disabled={!file || busy}>Import MCQ CSV</button></form>
       <p className="import-hint">One question per row. Use true/false for published and A, B, C or D for correct. Source is optional.</p>
       <ErrorMessage text={error}/>{message && <p role="status" className="screen-message">{message}</p>}

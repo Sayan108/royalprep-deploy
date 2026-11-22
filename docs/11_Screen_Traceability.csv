@@ -1,0 +1,53 @@
+number,screen,deployment,route,android,requirements
+1,Home page,student,/,Web first,"Published hero, benefits, navigation and primary actions; staff can preview, publish and restore hero revisions."
+2,Course all chapters,student,/course,Web first,"Published chapters by paper and subject with search, access indicators and chapter links."
+3,Chapter preview page,student,/course/:slug,Web first,"Public chapter overview, topics, approved sample and sign-in or purchase action."
+4,Pricing,student,/pricing,Web first,"Available plans, durations, supported markets and currencies, feature comparison and approved terms."
+5,Free tool eligibility calculator,student,/tools/eligibility,Web first,Calculate eligibility from collected inputs and approved versioned rules with source and verified date.
+6,Free tool orientation guide,student,/tools/orientation,Web first,"Published guide contents, section navigation and approved resource download if enabled."
+7,Free tools all tools,student,/tools,Web first,"Catalog linking calculator, guide, planner, quiz, flashcards and exam dates."
+8,RoyalPrep Radio recall audio,student,/radio,Web first,"Public catalog, approved previews, playback controls and eligible full episode links."
+9,Free tool study planner,student,/tools/planner,Web first,Target date and weekly availability create editable chapter tasks; signed-in students save plans.
+10,Free tool daily 5-question quiz,student,/tools/daily-quiz,Web first,"Five common questions per date, one scored submission per account, explanations and completion."
+11,Free tool flashcards,student,/tools/flashcards,Web first,"Browse free cards, flip and record recall ratings when signed in."
+12,Free tool 2027 exam dates,student,/exam-dates,Web first,"Admin-verified sittings, application deadlines, fees, timezone and source; year is data."
+13,Sign up Log in,student,/sign-in,Native,"Email OTP registration/login; local demo returns a code, production delivery provider pending."
+14,Dashboard,student,/app,Native,"Access, continue reading, upcoming mocks, due cards, recent results and study tasks."
+15,Chapter library,student,/app/chapters,Native,"Paper/topic filters, progress, search and access status."
+16,Reading a chapter,student,/app/chapters/:id,Native,"Protected notes/diagrams, anchors, progress, highlights, saved sections and tutor."
+17,Practice question,student,/app/practice/:id,Native,"Single-best-answer question, selection and tutor-mode reveal with explanation, flags and reports."
+18,Mocks today's Daily Mock and custom mocks,student,/app/mocks,Native,"Daily window, weekly Grand Mock registration, on-demand mocks, custom builder and resume."
+19,Create a custom mock,student,/app/mocks/new,Native,"Multiple chapters, count, all/unattempted/incorrect/bookmarked filter and timed/tutor mode with inventory validation."
+20,Taking a custom or daily mock,student,/app/attempts/:id,Native,"Server deadline, navigation, acknowledged saves, resumption, flags and idempotent submit."
+21,Mock review and analytics,student,/app/attempts/:id/review,Native,"Authorized explanations, topic breakdown, wrong-answer review and coverage after review release."
+22,Daily Mock leaderboard,student,/app/mocks/:id/leaderboard,Native,"Valid scored entries, nickname privacy, score/time ties, cohort size, provisional/final standings and percentile."
+23,Mock exam like Pearson VUE,student,/app/exam/:id,Native,"Dedicated exam shell, timer, grid, flags, review, strike-through, highlight, calculator and warnings when enabled."
+24,Results,student,/app/results,Native,"Filtered history, scores, trends, chapter heatmap, percentile, estimated pass band and readiness with low-data states."
+25,Retain Revision Packs,student,/app/revision,Native,"Chapter pearls, diagrams, numbers, mnemonics, yield/recall filters and send-to-flashcards."
+26,Retain Flashcards,student,/app/flashcards,Native,"Chapter decks, due counts, flip and Again/Hard/Good/Easy scheduling across devices."
+27,Retain RoyalPrep Radio,student,/app/radio,Native,"Entitled playback, seek, speed, resume progress and chapter linkage."
+28,Learn Masterclass videos,student,/app/videos,Native,"Entitled playback, captions when supplied, progress and accurate coming-soon states."
+29,Recalls mixed bag,student,/app/recalls,Native,Approved recall topics and mixed practice from tagged question revisions.
+30,Recalls Fawzia sheet,student,/app/fawzia,Native,"Approved tagged concepts, coverage counts and linked topic/chapter practice."
+31,Retain My Mistakes,student,/app/mistakes,Native,"Incorrect-answer list, chapter filter, targeted retest and updated mastery."
+32,Retain Saved,student,/app/saved,Native,"Saved questions/sections, highlights and personal notes with edit/remove and stable source links."
+33,Retain Last week and exam eve,student,/app/last-week,Native,"Date-aware revision checklists, resources and per-user completion."
+34,AI tutor,student,/app/tutor,Native,"Chapter-grounded sourced answers, owned chat history, continuation, quotas and active-mock restriction."
+35,Profile and privacy,student,/app/profile,Native,"Profile, nickname and ranking consent, devices, session revoke, privacy preferences, export and deletion request."
+36,Choose a plan and pay,student,/app/billing,Native,"Checkout states, coupon redemption, configured renew/upgrade choices, invoices and expiry."
+37,Terms and conditions,student,/terms,Policy/help navigation,Published versioned client-approved terms.
+38,Privacy policy,student,/privacy,Policy/help navigation,Published policy and processor disclosures.
+39,Refund and cancellation,student,/refunds,Policy/help navigation,Published eligibility and instructions aligned to commercial policy.
+40,Delivery policy,student,/delivery,Policy/help navigation,Published digital-access fulfillment policy.
+41,Contact us,student,/contact,Policy/help navigation,Support details and validated consent-aware enquiry with delivery feedback.
+42,About us,student,/about,Policy/help navigation,"Approved company, founder and team content and media."
+43,Admin sign-in,admin,/sign-in,Web first,"Password-based staff login with mandatory second-factor enrollment and recovery, session expiry and protected admin routes."
+44,Admin dashboard,admin,/,Web first,"Date-filtered users, sales by currency, activity, content usage and pending actions."
+45,Content manager,admin,/content,Web first,"Versioned chapters, notes, packs, flashcards, media and public CMS including hero upload/preview/publication."
+46,Question bank,admin,/questions,Web first,"MCQ search/filters, CSV/JSON validation, preview/commit, tags, options/explanations and immutable versions."
+47,Mocks and Daily Mock,admin,/mocks,Web first,"Calendar, curated sets, blueprint totals, Grand Mock registration, eligibility, timing, review release and rankings."
+48,Users and sessions,admin,/users,Web first,"Student search, plan change/extension with reason, devices, revoke and account flags."
+49,Plans payments and coupons,admin,/commerce,Web first,"Versioned market prices, coupon caps, transaction lookup, refunds, credit notes and reconciliation."
+50,Reports and broadcasts,admin,/communications,Web first,"Content reports, replies, audience selection, email/in-app preview and deduplicated delivery."
+51,SEO exam facts and leads,admin,/seo,Web first,"Metadata, canonicals, indexing, sitemap, sourced facts and consent-filtered leads/export."
+52,Team switches and audit log,admin,/settings,Web first,"Invitations, roles, second-factor enrollment, runtime switches and immutable audit search."

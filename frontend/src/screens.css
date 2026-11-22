@@ -31,6 +31,8 @@
 .screen-content h1 { margin: 0; font: 700 34px Georgia, serif; }
 .screen-kicker { margin: 0 0 6px; color: #6b7b95; font-size: 11px; line-height: 1; font-weight: 800; letter-spacing: .1em; }
 .practice-heading, .bank-heading { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
+.practice-account { display: flex; align-items: center; gap: 12px; margin-top: 12px; font-size: 13px; }
+.demo-otp { padding: 12px; border-radius: 6px; background: #fff5dc; color: #172741; }
 .progress-track { height: 8px; margin: 18px 0; border-radius: 8px; background: #e8dfca; overflow: hidden; }
 .progress-track div { height: 100%; background: #d7ad38; }
 .screen-card { min-width: 0; padding: 22px; border: 1px solid #e8dfca; border-radius: 12px; background: #fff; }

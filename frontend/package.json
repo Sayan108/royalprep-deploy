@@ -6,6 +6,10 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "tsc --noEmit && vite build",
+    "dev:student": "vite --host 127.0.0.1 --mode student",
+    "dev:admin": "vite --host 127.0.0.1 --mode admin",
+    "build:student": "tsc --noEmit && vite build --mode student",
+    "build:admin": "tsc --noEmit && vite build --mode admin",
     "preview": "vite preview"
   },
   "dependencies": {

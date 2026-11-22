@@ -1,8 +1,9 @@
 import { randomBytes } from 'node:crypto'
-import { createQuestionRepository } from '../repositories/questionRepository.js'
+import type { Pool } from 'pg'
+import { createPostgresQuestionRepository } from '../repositories/postgresQuestionRepository.js'
 
 export const id = () => randomBytes(24).toString('hex')
 
-export function createQuestionService(memory = false) {
-  return createQuestionRepository(memory)
+export function createQuestionService(postgres: Pool) {
+  return createPostgresQuestionRepository(postgres)
 }
