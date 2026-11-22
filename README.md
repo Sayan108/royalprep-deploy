@@ -16,6 +16,14 @@ In `frontend`, run `npm ci` once for the shared codebase and copy `.env.example`
 
 The development proxy forwards `/api` to port 4000; if the backend uses another port, set `VITE_API_URL` to its origin. Configure the backend and reverse proxy for the actual frontend origins.
 
+### Vercel frontends
+
+Import the repository as two Vercel projects, both with root directory `frontend` and framework preset Vite. For the student project, use build command `npm run build:student` and output directory `dist/student`; for the admin project, use `npm run build:admin` and `dist/admin`. The shared `frontend/vercel.json` provides the SPA fallback for both.
+
+Set `VITE_API_URL` on both projects to the HTTPS backend origin, without `/api` or a trailing slash. Set `VITE_ADMIN_URL` on the student project to the admin deployment URL ending in `/admin`, and `VITE_STUDENT_URL` on the admin project to the student deployment origin. Vite embeds these values at build time, so redeploy after changing them; never put secrets in `VITE_` variables. A fork can be imported if you cannot connect the original repository; sync the fork to receive upstream updates.
+
+The Render backend must use production settings, but authentication is unavailable until real email OTP is implemented. Do not expose the dummy OTP bypass publicly.
+
 ## PostgreSQL database
 
 PostgreSQL is the backend's only application database for questions, reports, homepage hero content, student study plans, custom mock attempts and personal flashcards. Install PostgreSQL, create an appropriately restricted database and user, and set `DATABASE_URL` in `backend/.env` without committing credentials. From `backend`, run `node --import tsx scripts/migrate-postgres.ts` to apply the SQL migrations. The backend requires the connection and all required tables at startup. Real PostgreSQL migration, locking, concurrency and backup/restore behavior still need operational verification.
