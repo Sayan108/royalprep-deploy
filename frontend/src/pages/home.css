@@ -1,4 +1,4 @@
-.home { --home-ink: #0f1a33; --home-muted: #5a6276; --home-line: #e6dfcc; color: var(--home-ink); background: #fff; min-height: 100vh; }
+.home { --home-ink: #0f1a33; --home-muted: #5a6276; --home-line: #e6dfcc; color: var(--home-ink); background: #fff; min-height: 100vh; overflow-wrap: anywhere; }
 .home-wrap { width: min(1120px, calc(100% - 64px)); margin-inline: auto; }
 .home-top { border-bottom: 1px solid var(--home-line); }
 .home-top-inner { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
@@ -48,6 +48,10 @@
   .home-top nav { display: none; }
   .home-top-inner { gap: 10px; }
   .home-row, .home-footer-inner { align-items: flex-start; flex-wrap: wrap; }
+}
+@media (max-width: 380px) {
+  .home-top-inner { flex-wrap: wrap; padding-block: 10px; }
+  .home-top-inner .home-button { font-size: .8rem; }
 }
 @container (max-width: 720px) {
   .home-hero-inner { width: calc(100% - 32px); grid-template-columns: 1fr; gap: 24px; }

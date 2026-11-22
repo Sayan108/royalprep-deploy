@@ -63,6 +63,6 @@ export function Home() {
         <details><summary>Are mock exams available?</summary><p>Custom timed mocks are available. Scheduled Daily and Grand Mocks are not available yet.</p></details>
       </section>
     </main>
-    <footer className="home-footer"><div className="home-wrap home-footer-inner"><Link className="home-brand" to="/"><img src={logo} alt="" /><span>RoyalPrep</span></Link><nav aria-label="Footer"><Link to="/sign-in">Student sign-in</Link>{import.meta.env.MODE === 'student' ? (import.meta.env.VITE_ADMIN_URL && <a href={import.meta.env.VITE_ADMIN_URL}>Staff</a>) : <Link to="/admin">Staff</Link>}</nav></div></footer>
+    <footer className="home-footer"><div className="home-wrap home-footer-inner"><Link className="home-brand" to="/"><img src={logo} alt="" /><span>RoyalPrep</span></Link><nav aria-label="Footer"><Link to="/sign-in">Student sign-in</Link></nav></div></footer>
   </div>
 }

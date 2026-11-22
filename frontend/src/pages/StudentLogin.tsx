@@ -72,7 +72,7 @@ export function StudentLogin() {
     } finally { setBusy(false) }
   }
 
-  return <ScreenLayout>
+  return <ScreenLayout navigation={false}>
     <section className="screen-card narrow">
       {signedInEmail ? <>
         <p className="screen-kicker">STUDENT ACCOUNT</p>

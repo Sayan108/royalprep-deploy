@@ -16,10 +16,10 @@ import { Flashcards } from './pages/Flashcards'
 
 export const studentRoutes = <>
   <Route path="/" element={<Home/>}/>
-  <Route path="/course" element={<ChapterLibrary publicCatalog/>}/>
-  <Route path="/course/:chapter" element={<ChapterPreview/>}/>
-  <Route path="/tools" element={<Tools/>}/>
-  <Route path="/tools/planner" element={<StudyPlanner/>}/>
+  <Route path="/course" element={<RequireSession><ChapterLibrary publicCatalog/></RequireSession>}/>
+  <Route path="/course/:chapter" element={<RequireSession><ChapterPreview/></RequireSession>}/>
+  <Route path="/tools" element={<RequireSession><Tools/></RequireSession>}/>
+  <Route path="/tools/planner" element={<RequireSession><StudyPlanner/></RequireSession>}/>
   <Route path="/app" element={<RequireSession><Dashboard/></RequireSession>}/>
   <Route path="/app/chapters" element={<RequireSession><ChapterLibrary/></RequireSession>}/>
   <Route path="/app/mocks" element={<RequireSession><Mocks/></RequireSession>}/>

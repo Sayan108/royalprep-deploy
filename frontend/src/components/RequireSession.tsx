@@ -36,7 +36,7 @@ export function RequireSession({ admin = false, children }: { admin?: boolean; c
   }, [admin, attempt])
   if (status === 'unauthorized') return <Navigate to={admin ? '/admin' : '/sign-in'} state={{ from: location.pathname + location.search }} replace />
   if (status === 'allowed') return children
-  return <ScreenLayout admin={admin}><section className="screen-card">
+  return <ScreenLayout admin={admin} navigation={false}><section className="screen-card">
     {status === 'loading' ? <p role="status">Checking your session...</p> : <>
       <h1>Unable to check your session</h1><ErrorMessage text={error}/>
       <button className="outline-button" type="button" onClick={() => setAttempt(value => value + 1)}>Try again</button>

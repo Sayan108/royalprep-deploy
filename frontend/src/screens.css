@@ -20,14 +20,16 @@
 .screen-brand span span { color: #bb8d1d; }
 .brand-mark { display: block; flex: 0 0 46px; width: 46px; height: 46px; }
 .screen-header-actions { display: flex; align-items: center; gap: 14px; }
+.screen-menu-toggle { display: none; min-height: 44px; padding: 8px 12px; border: 1px solid currentColor; border-radius: 6px; background: transparent; color: inherit; }
 .header-badge, .counter { border-radius: 20px; padding: 5px 10px; background: #e7effe; color: #2960a8; font-size: 11px; font-weight: 800; letter-spacing: .04em; }
 .header-link { font-size: 13px; font-weight: 700; }
 .screen-body { display: grid; grid-template-columns: 200px minmax(0, 1fr); min-height: calc(100vh - 72px); }
+.screen-body-no-sidebar { grid-template-columns: minmax(0, 1fr); }
 .screen-sidebar { padding: 25px 10px; background: white; border-right: 1px solid #e8e1d0; }
 .sidebar-label { margin: 0 10px 12px; color: #c27e34; font-size: 11px; font-weight: 800; letter-spacing: .12em; }
 .screen-sidebar a { display: block; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: 700; }
 .screen-sidebar a.active { background: #f7ebc1; text-decoration: none; }
-.screen-content { min-width: 0; max-width: none; width: 100%; padding: 30px 28px 60px; }
+.screen-content { min-width: 0; max-width: none; width: 100%; padding: 30px 28px 60px; overflow-wrap: anywhere; }
 .screen-content h1 { margin: 0; font: 700 34px Georgia, serif; }
 .screen-kicker { margin: 0 0 6px; color: #6b7b95; font-size: 11px; line-height: 1; font-weight: 800; letter-spacing: .1em; }
 .practice-heading, .bank-heading { display: flex; justify-content: space-between; gap: 20px; align-items: center; }
@@ -101,6 +103,12 @@
   .bank-list { max-height: 400px; }
 }
 @media (max-width: 800px) {
+  .screen-body { display: block; }
+  .screen-menu-toggle { display: inline-flex; align-items: center; justify-content: center; }
+  .screen-sidebar { display: none; padding: 8px 16px; border-right: 0; border-bottom: 1px solid #e8e1d0; }
+  .screen-sidebar-open { display: block; }
+  .screen-sidebar .sidebar-label { margin-top: 8px; }
+  .screen-sidebar a { min-height: 44px; }
   .bank-list-header { display: none; }
   .bank-row { grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; min-width: 0; }
   .row-stem { grid-column: 1 / -1; grid-row: 2; }
@@ -113,10 +121,6 @@
   .screen-brand { font-size: 20px; }
   .brand-mark { flex-basis: 38px; width: 38px; height: 38px; }
   .screen-header-actions { gap: 8px; }
-  .screen-body { display: block; }
-  .screen-sidebar { display: flex; gap: 4px; overflow-x: auto; padding: 8px; border-bottom: 1px solid #e8e1d0; }
-  .screen-sidebar .sidebar-label { display: none; }
-  .screen-sidebar a { white-space: nowrap; padding: 10px; }
   .screen-content { padding: 22px 16px 48px; }
   .screen-content h1 { font-size: 30px; }
   .practice-heading, .bank-heading { align-items: flex-start; }
@@ -125,6 +129,9 @@
   .bank-filters { grid-template-columns: 1fr 1fr; }
   .bank-actions { width: 100%; }
   .screen-card { padding: 18px; }
+  .screen-button, .outline-button { min-height: 44px; }
+  input, textarea, select { font-size: 16px; }
+  .practice-account, .question-meta { flex-wrap: wrap; }
 }
 @media (max-width: 380px) {
   .header-badge { display: none; }
